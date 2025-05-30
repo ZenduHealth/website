@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Data Deletion - Alleviate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #FAFAFA;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 48px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+            margin: 0 auto 48px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 3px solid #000;
+            border-radius: 14px;
+            background: white;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #33B4EC;
+            box-shadow: 0 0 0 3px rgba(51, 180, 236, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .delete-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 500;
+            color: white;
+            background: #E74C3C;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            letter-spacing: -0.41px;
+            margin-top: 12px;
+        }
+
+        .delete-button:hover:not(:disabled) {
+            background: #C0392B;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .delete-button:disabled {
+            background: #BDC3C7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .success-message {
+            display: none;
+            background: #D5F5E3;
+            border: 2px solid #27AE60;
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #27AE60;
+            margin-bottom: 8px;
+        }
+
+        .success-text {
+            font-size: 16px;
+            color: #2D5A3D;
+            line-height: 1.5;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .warning-text {
+            font-size: 14px;
+            color: #E74C3C;
+            margin-top: 16px;
+            padding: 12px;
+            background: #FDEDEC;
+            border-radius: 8px;
+            border-left: 4px solid #E74C3C;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 32px 24px;
+                margin: 12px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Alleviate Logo -->
+        <div class="logo">
+            <svg width="200" height="154" viewBox="0 0 264 204" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M177.265 167.266C179.515 166.836 181.355 165.465 183.315 164.395C203.085 153.525 221.055 140.286 236.195 123.446C243.485 115.346 250.095 106.755 254.515 96.6755C257.325 90.2755 259.275 83.6055 259.525 76.6255C259.985 63.7855 253.905 54.3455 243.545 47.3255C236.495 42.5455 228.535 39.9155 220.405 37.7455C219.315 37.4555 218.235 37.2755 217.595 36.2255C218.105 35.5355 218.745 35.6955 219.305 35.8055C229.175 37.7455 238.755 40.4555 247.105 46.3655C257.755 53.9055 263.555 64.0255 263.675 77.2955C263.785 89.7155 259.715 100.855 253.505 111.305C244.665 126.185 232.535 138.145 219.135 148.895C208.235 157.635 196.375 164.936 184.345 171.956C183.655 172.355 182.935 172.705 182.335 173.525C182.625 176.165 185.275 177.635 186.045 180.085C185.125 182.295 184.295 182.685 182.245 181.645C180.285 180.655 178.355 179.595 176.495 178.425C174.895 177.415 173.365 177.475 171.765 178.255C158.295 184.865 144.375 190.295 129.945 194.475C106.155 201.355 81.955 204.555 57.195 202.905C50.265 202.445 43.465 200.945 36.825 198.925C29.405 196.675 22.215 193.835 15.945 189.145C3.62502 179.935 -1.21498 167.415 0.255022 152.365C1.55502 138.995 7.75502 127.605 15.575 117.065C26.965 101.725 41.255 89.5055 57.245 79.1855C57.865 78.7855 58.475 78.0455 59.475 78.6755C58.955 80.2355 57.605 81.0255 56.445 81.9655C45.505 90.8755 35.135 100.375 26.145 111.275C19.175 119.735 12.795 128.615 8.96502 138.995C4.71502 150.525 4.13502 162.075 10.385 173.175C14.235 180.005 20.435 184.235 27.345 187.565C39.445 193.395 52.355 195.155 65.605 195.425C77.505 195.675 89.355 195.076 101.115 193.206C111.655 191.536 122.015 189.085 132.235 185.975C143.975 182.395 155.345 177.895 166.565 172.965C170.905 171.065 171.515 167.445 167.845 164.345C164.985 161.925 161.575 160.305 158.485 158.225C152.775 154.385 147.395 150.125 142.185 145.655C136.725 140.965 130.515 137.855 123.505 136.135C115.265 134.115 108.645 129.365 103.185 123.006C101.805 121.396 100.405 120.905 98.335 121.085C90.645 121.755 83.135 123.025 76.175 126.585C75.355 127.005 74.555 127.485 73.675 127.975C73.965 130.365 75.245 132.275 76.135 134.305C79.035 140.935 79.525 147.975 79.925 155.035C80.175 159.505 80.705 163.925 81.715 168.295C82.545 171.905 82.155 172.795 78.925 174.585C75.845 176.295 72.845 178.185 69.465 179.295C66.725 180.195 63.955 180.145 61.155 179.645C60.545 179.535 60.015 179.255 59.835 178.485C59.805 177.475 60.595 177.105 61.405 176.745C63.235 175.945 65.025 175.055 66.715 173.975C71.565 170.855 73.435 166.505 71.995 160.905C70.805 156.265 69.295 151.705 67.915 147.115C66.205 141.445 64.385 135.795 62.795 130.095C61.715 126.235 62.545 124.355 66.165 122.585C72.135 119.655 78.215 116.955 84.235 114.115C86.205 113.185 87.855 111.885 88.635 109.715C87.165 105.835 85.505 102.055 84.695 97.9855C83.225 90.6355 83.535 83.2555 84.335 75.8755C84.845 71.2255 86.105 66.7355 87.365 62.2355C88.475 58.2955 87.315 54.4855 86.545 50.6155C84.245 38.9655 86.325 28.4655 95.445 20.1055C101.245 14.7855 107.275 9.71549 113.375 4.74549C117.505 1.37549 122.815 -0.304521 128.015 0.0454786C129.305 1.34548 129.305 1.3455 129.875 3.0655C129.485 4.8255 128.135 5.79547 126.685 6.66547C125.325 7.48547 123.795 8.04547 122.725 9.16547C122.195 10.1555 122.545 11.0755 122.625 11.9855C122.795 13.8255 122.035 14.5855 120.185 14.4455C119.855 14.4255 119.485 14.4255 119.205 14.2855C115.435 12.3955 112.425 13.9255 109.535 16.3255C103.365 21.4255 99.025 27.9855 94.805 34.6255C94.065 35.7955 93.765 37.2655 93.785 38.6655C93.855 43.5455 94.845 48.2055 97.515 52.3655C99.125 54.8655 101.335 55.5255 104.035 54.3455C104.115 52.3455 103.165 50.4455 102.835 48.4555C102.345 45.5455 101.885 42.6455 102.145 39.7055C102.655 34.0255 107.775 30.2455 113.695 31.0855C119.485 31.9055 123.235 36.9955 121.945 42.6255C120.725 47.9655 118.395 52.6755 113.275 55.4355C111.595 56.3355 109.695 56.4755 107.865 56.7755C104.345 57.3555 101.045 58.6055 97.825 60.0255C94.515 61.4855 92.795 64.4555 91.195 67.4955C88.225 73.1555 87.025 79.2555 86.695 85.5755C86.665 86.1455 86.595 86.7755 87.205 87.3855C88.035 86.6555 87.835 85.5655 88.195 84.7155C89.715 81.0955 92.015 78.0455 95.395 76.1155C101.425 72.6655 106.435 67.9855 111.565 63.4255C115.475 59.9655 119.755 57.3055 125.115 56.6855C127.625 56.3955 130.135 56.5155 132.445 57.2555C136.775 58.6455 140.925 58.6555 145.145 57.0155C150.125 55.0855 155.315 55.3655 160.345 56.3855C165.835 57.4855 170.905 56.6755 175.995 54.7155C177.655 54.0755 179.445 53.6655 181.205 53.3755C183.845 52.9555 185.605 54.9055 184.995 57.4355C183.245 58.8955 180.665 57.9555 178.845 59.4055C178.665 61.3855 182.125 60.8855 181.305 63.2755C180.205 64.4155 178.815 64.8255 177.195 64.3155C172.205 62.7255 167.105 62.6055 161.945 63.0755C155.765 63.6455 149.565 64.0255 143.415 64.7455C133.185 65.9455 123.355 68.5555 114.775 74.5355C108.925 78.6055 105.765 84.2555 106.085 91.5455C106.295 96.1955 108.085 100.276 111.385 103.516C114.685 106.756 117.595 110.275 120.225 114.065C125.575 121.805 132.475 127.896 140.325 133.016C153.005 141.275 163.735 151.725 173.565 163.155C174.565 164.315 175.585 165.465 176.595 166.615C176.765 166.855 176.985 167.006 177.265 167.266ZM220.835 61.7055C230.845 68.2655 233.045 77.3355 229.325 88.1855C226.705 95.8355 221.915 102.155 216.785 108.215C206.095 120.835 193.275 131.035 179.935 140.655C179.115 141.245 178.065 141.655 177.905 142.895C178.895 143.405 179.685 143.065 180.455 142.665C192.725 136.205 204.195 128.615 214.075 118.795C222.995 109.925 230.595 100.285 234.125 87.8055C237.855 74.6055 231.615 61.7955 218.605 57.3255C217.235 56.8555 215.685 56.1955 213.605 57.1455C216.355 58.8855 218.625 60.2555 220.835 61.7055Z" fill="url(#paint0_linear_858_3180)"/>
+                <defs>
+                <linearGradient id="paint0_linear_858_3180" x1="34.3846" y1="208.258" x2="222.182" y2="20.461" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#209F76"/>
+                <stop offset="1" stop-color="#2162A3"/>
+                </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <h1 class="title">Request Data Deletion</h1>
+        <p class="subtitle">Enter your account details to request deletion of your personal data from our system.</p>
+
+        <form id="deletionForm">
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="Enter your email address"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <div class="warning-text">
+                <strong>Warning:</strong> This action cannot be undone. All your data will be permanently deleted from our system.
+            </div>
+
+            <button type="submit" id="deleteButton" class="delete-button">
+                Request Data Deletion
+            </button>
+        </form>
+
+        <div id="successMessage" class="success-message">
+            <div class="success-title">Request Accepted</div>
+            <div class="success-text">
+                Your data deletion request has been received. Your data will be deleted within the next 3 business days. You will receive a confirmation email once the deletion is complete.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('deletionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const deleteButton = document.getElementById('deleteButton');
+            const successMessage = document.getElementById('successMessage');
+            const form = document.getElementById('deletionForm');
+            
+            // Basic validation
+            if (!email || !password) {
+                alert('Please enter both email and password.');
+                return;
+            }
+            
+            // Disable button and show loading state
+            deleteButton.disabled = true;
+            deleteButton.textContent = 'Processing Request...';
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                // Hide form and show success message
+                form.style.display = 'none';
+                successMessage.classList.add('show');
+                
+                // Reset button state (in case user goes back)
+                deleteButton.disabled = false;
+                deleteButton.textContent = 'Request Data Deletion';
+            }, 2000);
+        });
+
+        // Add some interactive feedback
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+    </script>
+</body>
+</html>
